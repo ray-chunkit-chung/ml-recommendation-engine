@@ -1,4 +1,8 @@
 tensorflow
+tensorflow_datasets
 keras
+scikit-learn
+pandas
+Jinja2
 
 # pip install --upgrade -r requirements.txt
