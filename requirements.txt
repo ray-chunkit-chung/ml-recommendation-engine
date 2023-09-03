@@ -1,8 +1,8 @@
 tensorflow
 tensorflow_datasets
 keras
-scikit-learn
 pandas
 Jinja2
+pydot
 
 # pip install --upgrade -r requirements.txt
