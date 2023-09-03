@@ -4,5 +4,9 @@ keras
 pandas
 Jinja2
 pydot
+fastapi
+uvicorn
+python-multipart
+pydantic
 
 # pip install --upgrade -r requirements.txt
