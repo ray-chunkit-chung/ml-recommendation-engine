@@ -8,5 +8,6 @@ fastapi
 uvicorn
 python-multipart
 pydantic
+python-dotenv
 
 # pip install --upgrade -r requirements.txt

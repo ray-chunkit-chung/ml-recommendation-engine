@@ -1,19 +1,21 @@
 import os
 import keras
 import numpy as np
-import pandas as pd
 
+import uvicorn
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
-import uvicorn
 
 from typing import List
 from pydantic import BaseModel
 
+from dotenv import load_dotenv
 
-MODEL_PATH = "../local/model.h5"
+load_dotenv()
+
+MODEL_PATH = os.environ.get("MODEL_PATH")
 
 
 class FeatureSet(BaseModel):
