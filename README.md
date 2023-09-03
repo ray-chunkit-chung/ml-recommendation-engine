@@ -35,6 +35,12 @@ python src/predict.py
 
 ## Serve model
 
+Serve locally
+
+```bash
+python src/serve.py
+```
+
 1. Containerize Your Model:
 
     Create a Docker container for your trained model. You'll need a Dockerfile that specifies the environment and dependencies required to run your model. This might include the machine learning framework (e.g., TensorFlow, PyTorch), any required libraries, and your Python code for serving the model as a REST API.
@@ -102,4 +108,3 @@ Push the Docker image to a container registry like Docker Hub, Google Container 
 <https://towardsdatascience.com/recommender-systems-from-learned-embeddings-f1d12288f278>
 
 <https://towardsdatascience.com/introduction-to-embedding-based-recommender-systems-956faceb1919>
-
