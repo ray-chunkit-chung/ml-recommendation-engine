@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-serving-service
+spec:
+  selector:
+    app: model-serving  # Selects pods with the label app: model-serving
+  ports:
+    - protocol: TCP
+      port: 80          # Port on the service
+      targetPort: 5000  # Port on the pods (matching containerPort in Deployment)
+  type: ClusterIP        # Service type (options: ClusterIP, NodePort, LoadBalancer)
+
+# Deploy step
+# kubectl apply -f k8s/service.yaml

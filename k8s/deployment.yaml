@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendation-engine-serving-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: recommendation-engine-serving
+  template:
+    metadata:
+      labels:
+        app: recommendation-engine-serving
+    spec:
+      containers:
+        - name: recommendation-engine-serving-container
+          image: raychung/recommendation-engine-serving-container:latest
+          ports:
+            - containerPort: 5000 # Port your application listens on
+          resources:
+            requests:
+              memory: "128Mi" # Resource requests for the pod
+              cpu: "250m"
+            limits:
+              memory: "256Mi" # Resource limits for the pod
+              cpu: "500m"
+
+# Deploy step
+# kubectl apply -f k8s/deployment.yaml

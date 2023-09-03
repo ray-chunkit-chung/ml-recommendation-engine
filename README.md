@@ -33,7 +33,7 @@ Predict the top 10 recommendations for user 1
 python src/predict.py
 ```
 
-## Serve model
+## Serve model locally
 
 Serve locally
 
@@ -41,26 +41,42 @@ Serve locally
 python src/serve.py
 ```
 
-1. Containerize Your Model:
+## Serve locally with Docker
 
-    Create a Docker container for your trained model. You'll need a Dockerfile that specifies the environment and dependencies required to run your model. This might include the machine learning framework (e.g., TensorFlow, PyTorch), any required libraries, and your Python code for serving the model as a REST API.
+Build the Docker image using the Dockerfile. Push the Docker image to a container registry like Docker Hub, Google Container Registry, or Amazon ECR. Make sure your Kubernetes cluster can access this registry.
 
-2. Build and Push the Docker Image:
+```bash
+docker build -t raychung/recommendation-engine-serving-container .
+docker run -p 5000:5000 raychung/recommendation-engine-serving-container
+```
 
-    Build the Docker image using the Dockerfile.
-Push the Docker image to a container registry like Docker Hub, Google Container Registry, or Amazon ECR. Make sure your Kubernetes cluster can access this registry.
+## Serve with Kubernetes
+
+Write a Kubernetes Deployment YAML file that describes the desired state of your application. This file should include information about the Docker image to use, environment variables, and replicas.
+
+Write a Kubernetes Service YAML file to expose your application within the cluster. You can use a LoadBalancer, NodePort, or ClusterIP service type, depending on your requirements.
+
+Apply the Deployment and Service YAML files to your Kubernetes cluster using kubectl apply.
+
+```bash
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+```
+
+If you want to expose your service to external users, consider using the LoadBalancer type, which can provision an external load balancer and allocate an external IP address for access.
+
 
 3. Create Kubernetes Deployment:
 
-    Write a Kubernetes Deployment YAML file that describes the desired state of your application. This file should include information about the Docker image to use, environment variables, and replicas.
+
 
 4. Create Kubernetes Service:
 
-    Write a Kubernetes Service YAML file to expose your application within the cluster. You can use a LoadBalancer, NodePort, or ClusterIP service type, depending on your requirements.
 
 5. Deploy to Kubernetes:
 
-    Apply the Deployment and Service YAML files to your Kubernetes cluster using kubectl apply.
+
+## Other Considerations
 
 6. Scale and Monitor:
 
