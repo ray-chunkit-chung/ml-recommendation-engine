@@ -1,5 +1,7 @@
 # recommendation-engine
 
+A minimal example of recommendation engine using Python, FastAPI, and TensorFlow. The model is trained on the MovieLens 100K dataset. Deployed to Kubernetes on AKS.
+
 ## Install packages
 
 ```bash
