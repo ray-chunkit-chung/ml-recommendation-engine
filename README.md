@@ -56,6 +56,49 @@ Write a Kubernetes Deployment YAML file that describes the desired state of your
 
 Write a Kubernetes Service YAML file to expose your application within the cluster. You can use a LoadBalancer, NodePort, or ClusterIP service type, depending on your requirements.
 
+If you want to expose your service to external users, consider using the LoadBalancer type, which can provision an external load balancer and allocate an external IP address for access.
+
+### Install cli tools
+
+Install azure cli
+
+```bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+```
+
+Install kubectl
+
+```bash
+# x86-64 Download
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+# Validate the binary (optional)
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+
+# Install
+install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
+```
+
+### Setup Azure Kubernetes Service (AKS) cluster
+
+```bash
+# Login Azure
+az login --tenant $AZURE_TENANT_ID
+
+# Create resource group
+az group create --name $AZURE_RG --location $AZURE_LOCATION --subscription $AZURE_SUBSCRIPTION
+
+# Create AKS cluster
+az aks create --resource-group $AZURE_RG --name $AKS --subscription $AZURE_SUBSCRIPTION --node-count 3 --enable-addons monitoring --generate-ssh-keys
+
+# Configure kubectl to use the credentials from the AKS cluster
+az aks get-credentials --resource-group $AZURE_RG --subscription $AZURE_SUBSCRIPTION --name $AKS
+```
+
+### Deploy to Kubernetes
+
 Apply the Deployment and Service YAML files to your Kubernetes cluster using kubectl apply.
 
 ```bash
@@ -63,18 +106,36 @@ kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 ```
 
-If you want to expose your service to external users, consider using the LoadBalancer type, which can provision an external load balancer and allocate an external IP address for access.
+### Expose the service
 
+Expose the service using a LoadBalancer type service. This will provision an external load balancer and allocate an external IP address for access.
 
-3. Create Kubernetes Deployment:
+```bash
+kubectl expose deployment recommendation-engine-serving-deployment --type=LoadBalancer --name=recommendation-engine-loadbalancer --port=80 --target-port=5000
+```
 
+Once your service is exposed, you can access it using the public IP address of the Load Balancer.
 
+```bash
+kubectl get svc recommendation-engine-loadbalancer
+```
 
-4. Create Kubernetes Service:
+There you go <http://EXTERNAL-IP/docs> to check out the API documentation.
 
+### To save money when not in use
 
-5. Deploy to Kubernetes:
+Scale the number of replicas down to 0 when you're not using the service. This will stop the service and deallocate the VMs, saving you money.
 
+```bash
+az aks scale --resource-group $AZURE_RG --subscription $AZURE_SUBSCRIPTION --name $AKS --node-count 1
+```
+
+or just delete the service and deployment
+
+```bash
+kubectl delete service your-service-name
+kubectl delete deployment your-deployment-name
+```
 
 ## Other Considerations
 
