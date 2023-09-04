@@ -137,6 +137,11 @@ kubectl delete service your-service-name
 kubectl delete deployment your-deployment-name
 ```
 
+```bash
+kubectl get services  # This should not show your service anymore
+kubectl get deployments  # This should not show your deployment anymore
+```
+
 ## Other Considerations
 
 6. Scale and Monitor:
