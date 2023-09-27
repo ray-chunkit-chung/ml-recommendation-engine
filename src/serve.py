@@ -23,7 +23,7 @@ class FeatureSet(BaseModel):
     MovieIds: List[int]
 
 
-def regressor(data: dict) -> dict:
+def regressor(data: dict) -> list:
     # Load model and predict
     model = keras.models.load_model(MODEL_PATH)
     user_ids = data["UserIds"]
