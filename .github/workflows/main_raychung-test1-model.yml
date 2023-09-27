@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_2efdc35099a4499983ea56b27491c235 }}/raychung/recommendation-engine-serving-container:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_2efdc35099a4499983ea56b27491c235 }}/recommendation-engine-serving-container:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'raychung-test1-model'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_4bac0ad9269c44668705e16f058982a0 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_2efdc35099a4499983ea56b27491c235 }}/raychung/recommendation-engine-serving-container:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_2efdc35099a4499983ea56b27491c235 }}/recommendation-engine-serving-container:${{ github.sha }}'
