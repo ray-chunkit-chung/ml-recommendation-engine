@@ -5,12 +5,13 @@ FROM python:3.11
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy your model-serving code and model files into the container
-COPY src/serve.py /app/
-COPY local/model.h5 /app/
-
 # Install any required Python packages
 RUN pip install tensorflow keras fastapi uvicorn python-multipart python-dotenv
+
+# Copy your model-serving code and model files into the container
+# COPY local/model.h5 /app/
+ADD https://drive.google.com/uc?id=17ouuvFwKWuyQvFT4dmclKk8r3pf2tQmb&export=download /app/model.h5
+COPY src/serve.py /app/
 
 # Expose the port your REST API will run on
 EXPOSE 5000
