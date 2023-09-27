@@ -1,6 +1,7 @@
 import os
 import keras
 import numpy as np
+from operator import itemgetter
 
 import uvicorn
 from fastapi import FastAPI
@@ -23,7 +24,7 @@ class FeatureSet(BaseModel):
     MovieIds: List[int]
 
 
-def regressor(data: dict) -> list:
+def regressor(data: dict) -> dict:
     # Load model and predict
     model = keras.models.load_model(MODEL_PATH)
     user_ids = data["UserIds"]
@@ -31,23 +32,28 @@ def regressor(data: dict) -> list:
     user_movie_combinations = [
         (user_id, movie_id) for user_id in user_ids for movie_id in movie_ids
     ]
-    user_movie_combinations = np.array(user_movie_combinations)
-    score = (
-        model.predict([user_movie_combinations[:, 0], user_movie_combinations[:, 1]])
+    combination_array = np.array(user_movie_combinations)
+    scores = (
+        model.predict([combination_array[:, 0], combination_array[:, 1]])
         .ravel()
         .tolist()
     )
 
+    # Sort result by highest score. Return top 12
+    result = [
+        (i[0], i[1], scores[idx]) for idx, i in enumerate(user_movie_combinations)
+    ]
+    result = sorted(result, key=itemgetter(2), reverse=True)[:12]
+
     # Format result
-    result = []
-    for idx, i in enumerate(user_movie_combinations):
-        item = {
-                "userId": i[0],
-                "id": i[1],
-                "score": score[idx], 
-            } 
-        result.append(item)
-    result = jsonable_encoder(result)
+    result = [
+        {
+                "userId": user_id,
+                "id": movie_id,
+                "score": score, 
+        } for user_id, movie_id, score  in result
+    ]
+    result = jsonable_encoder({'predictions': result})
 
     return JSONResponse(content=result)
 

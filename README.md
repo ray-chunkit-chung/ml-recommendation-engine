@@ -50,6 +50,7 @@ Build the Docker image using the Dockerfile. Push the Docker image to a containe
 ```bash
 docker build -t raychung/recommendation-engine-serving-container .
 docker run -p 5000:5000 raychung/recommendation-engine-serving-container
+docker push raychung/recommendation-engine-serving-container
 ```
 
 ## Serve with Kubernetes
