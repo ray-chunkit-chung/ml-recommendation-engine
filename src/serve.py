@@ -24,6 +24,7 @@ class FeatureSet(BaseModel):
 
 
 def regressor(data: dict) -> dict:
+    # Load model and predict
     model = keras.models.load_model(MODEL_PATH)
     user_ids = data["UserIds"]
     movie_ids = data["MovieIds"]
@@ -31,12 +32,23 @@ def regressor(data: dict) -> dict:
         (user_id, movie_id) for user_id in user_ids for movie_id in movie_ids
     ]
     user_movie_combinations = np.array(user_movie_combinations)
-    result = (
+    score = (
         model.predict([user_movie_combinations[:, 0], user_movie_combinations[:, 1]])
         .ravel()
         .tolist()
     )
-    result = jsonable_encoder({"prediction": result})
+
+    # Format result
+    result = []
+    for idx, i in enumerate(user_movie_combinations):
+        item = {
+                "userId": i[0],
+                "id": i[1],
+                "score": score[idx], 
+            } 
+        result.append(item)
+    result = jsonable_encoder(result)
+
     return JSONResponse(content=result)
 
 
