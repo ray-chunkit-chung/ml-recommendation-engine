@@ -27,6 +27,12 @@ pip install --upgrade -r requirements.txt
 python src/train.py
 ```
 
+## Train online mode
+
+TODO: Train online mode with dynamic embeddings
+
+<https://blog.tensorflow.org/2023/04/training-recommendation-model-with-dynamic-embeddings.html>
+
 ## Predict
 
 Predict the top 10 recommendations for user 1
