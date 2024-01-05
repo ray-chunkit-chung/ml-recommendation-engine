@@ -24,17 +24,26 @@ source .venv/bin/activate
 pip install --upgrade -r requirements.txt
 ```
 
-## Train model
+Other versions
+
+```bash
+cd /tmp
+wget https://www.python.org/ftp/python/3.10.13/Python-3.10.13.tgz
+tar -xzvf Python-3.10.13.tgz
+cd Python-3.10.13/
+./configure --enable-optimizations --enable-loadable-sqlite-extensions
+make -j `nproc`
+make altinstall
+python3.10 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade -r requirements.txt
+```
+
+## Train simple model
 
 ```bash
 python src/train.py
 ```
-
-## Train online mode
-
-TODO: Train online mode with dynamic embeddings
-
-<https://blog.tensorflow.org/2023/04/training-recommendation-model-with-dynamic-embeddings.html>
 
 ## Predict
 
@@ -197,8 +206,24 @@ kubectl get deployments  # This should not show your deployment anymore
 
     Document how to use your REST API, including API endpoints, input/output formats, and authentication details.
 
+## Advanced topics
+
+### Train on check point
+
+```bash
+python src/train_on_ckpt.py
+```
+
+### Train online
+
+TODO: Train online mode with dynamic embeddings
+
+<https://blog.tensorflow.org/2023/04/training-recommendation-model-with-dynamic-embeddings.html>
+
 ## References
 
 <https://towardsdatascience.com/recommender-systems-from-learned-embeddings-f1d12288f278>
 
 <https://towardsdatascience.com/introduction-to-embedding-based-recommender-systems-956faceb1919>
+
+<https://blog.tensorflow.org/2023/04/training-recommendation-model-with-dynamic-embeddings.html>
