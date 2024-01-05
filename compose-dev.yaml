@@ -6,9 +6,6 @@ services:
     image: docker/dev-environments-default:stable-1
     init: true
     volumes:
-    - ml_re_dev_data:/var/run/docker.sock
-      # type: bind
-      # source: /var/run/docker.sock
-      # target: /var/run/docker.sock
-volumes:
-  ml_re_dev_data:
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
