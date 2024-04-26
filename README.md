@@ -112,7 +112,14 @@ az login --tenant $AZURE_TENANT_ID
 az group create --name $AZURE_RG --location $AZURE_LOCATION --subscription $AZURE_SUBSCRIPTION
 
 # Create AKS cluster
-az aks create --resource-group $AZURE_RG --name $AKS --subscription $AZURE_SUBSCRIPTION --node-count 3 --enable-addons monitoring --generate-ssh-keys
+az aks create \
+            --resource-group $AZURE_RG \
+            --name $AKS \
+            --subscription $AZURE_SUBSCRIPTION \
+            --node-count 3 \
+            --enable-cluster-autoscaler --min-count 0 --max-count 3 \
+            --enable-addons monitoring \
+            --generate-ssh-keys
 
 # Configure kubectl to use the credentials from the AKS cluster
 az aks get-credentials --resource-group $AZURE_RG --subscription $AZURE_SUBSCRIPTION --name $AKS
