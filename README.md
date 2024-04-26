@@ -9,9 +9,9 @@ https://raychung-test1-model.azurewebsites.net/docs (Available upon request)
 
 ```bash
 cd /tmp
-wget https://www.python.org/ftp/python/3.11.5/Python-3.11.5.tgz
-tar -xzvf Python-3.11.5.tgz
-cd Python-3.11.5/
+wget https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz
+tar -xzvf Python-3.11.9.tgz
+cd Python-3.11.9/
 apt update
 apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev libbz2-dev graphviz
 ./configure --enable-optimizations --enable-loadable-sqlite-extensions

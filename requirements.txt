@@ -1,7 +1,7 @@
 tensorflow
 tensorflow-datasets
 tensorflow-recommenders
-tensorflow-recommenders-addons
+# tensorflow-recommenders-addons
 keras
 pandas
 Jinja2
