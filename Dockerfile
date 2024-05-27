@@ -14,7 +14,7 @@ ADD https://drive.google.com/uc?id=17ouuvFwKWuyQvFT4dmclKk8r3pf2tQmb&export=down
 COPY src/serve.py /app/
 
 # Expose the port your REST API will run on
-EXPOSE 5000
+EXPOSE 80
 
 # Set model path as an environment variable
 ENV MODEL_PATH=/app/model.h5

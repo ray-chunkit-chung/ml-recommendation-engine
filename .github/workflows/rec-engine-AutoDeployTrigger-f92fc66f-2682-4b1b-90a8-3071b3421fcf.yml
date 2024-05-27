@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - 'DockerfileContainerApp/**'
+    - '**'
     - '.github/workflows/rec-engine-AutoDeployTrigger-f92fc66f-2682-4b1b-90a8-3071b3421fcf.yml'
 
   # Allow manual trigger 
@@ -34,7 +34,7 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}/DockerfileContainerApp 
+          appSourcePath: ${{ github.workspace }} 
           registryUrl: docker.io
           registryUsername: ${{ secrets.RECENGINE_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.RECENGINE_REGISTRY_PASSWORD }}
