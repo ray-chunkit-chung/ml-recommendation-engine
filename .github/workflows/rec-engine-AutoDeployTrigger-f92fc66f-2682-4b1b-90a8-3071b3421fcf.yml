@@ -7,7 +7,7 @@ on:
     branches: 
       [ main ]
     paths:
-    - 'DockfileContainerApp/**'
+    - '**'
     - '.github/workflows/rec-engine-AutoDeployTrigger-f92fc66f-2682-4b1b-90a8-3071b3421fcf.yml'
 
   # Allow manual trigger 
